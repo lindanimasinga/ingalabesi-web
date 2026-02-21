@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../service/storage-service.service';
 import { IzingaOrderManagementService } from '../service/izinga-order-management.service';
+import { SeoService } from '../service/seo.service';
 import { StoreProfile, Stock, Promotion } from '../model/models';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,11 +22,20 @@ export class HomeComponent implements OnInit {
   startOrder = false;
   searchItems: Stock[];
 
-  constructor(protected izingaService: IzingaOrderManagementService, protected storage: StorageService, 
-    protected activatedRoute: ActivatedRoute, private router: Router, private sanitizer:DomSanitizer) {
+  constructor(
+    protected izingaService: IzingaOrderManagementService, 
+    protected storage: StorageService, 
+    protected activatedRoute: ActivatedRoute, 
+    private router: Router, 
+    private sanitizer: DomSanitizer,
+    private seoService: SeoService
+  ) {
   }
 
   ngOnInit() {
+    // Set SEO for home page
+    this.seoService.setHomePageSEO();
+    
     console.log(`store id 2 is ${JSON.stringify(this.activatedRoute.paramMap)}`)
     var shortName =  this.activatedRoute.snapshot.paramMap.get('shortname')
     console.log("shortname is " + shortName)
@@ -35,7 +45,15 @@ export class HomeComponent implements OnInit {
     this.izingaService.getStoreById(shortName)
     .subscribe(shop => {
       this.shop = shop;
-      this.storage.shop = shop
+      this.storage.shop = shop;
+      
+      // Update SEO with store-specific information
+      this.seoService.updateMetaTags({
+        title: `${shop.name} - Food Delivery`,
+        description: `Order from ${shop.name} through iZinga Food Market. Fresh meals, fast delivery across South Africa. Browse menu and order online now.`,
+        keywords: `${shop.name}, food delivery, restaurant delivery, ${shop.name} menu, South Africa, order online, fast food`
+      });
+      
       this.categories = new Set(this.shop.stockList.sort((a, b) => this.isPromotion(a) ? -1 : 1).map(stk => stk.group))
       
       //get promotions

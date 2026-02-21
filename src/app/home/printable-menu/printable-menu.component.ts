@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IzingaOrderManagementService } from 'src/app/service/izinga-order-management.service';
 import { StorageService } from 'src/app/service/storage-service.service';
+import { SeoService } from 'src/app/service/seo.service';
 
 @Component({
   selector: 'app-printable-menu',
@@ -13,8 +14,8 @@ import { StorageService } from 'src/app/service/storage-service.service';
 export class PrintableMenuComponent extends HomeComponent {
 
   constructor(izingaService: IzingaOrderManagementService, storage: StorageService, 
-    activatedRoute: ActivatedRoute, router: Router, sanitizer:DomSanitizer) {
-      super(izingaService, storage, activatedRoute, router, sanitizer)
+    activatedRoute: ActivatedRoute, router: Router, sanitizer: DomSanitizer, seoService: SeoService) {
+      super(izingaService, storage, activatedRoute, router, sanitizer, seoService)
   }
 
   ngOnInit() {
