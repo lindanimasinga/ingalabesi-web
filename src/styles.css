@@ -1,8 +1,15 @@
 :root {
-    --brand-primary: #E67B26;
-    --brand-secondary: #EDE4CB;
-    --brand-text-on-primary: #FFFFFF;
-    --brand-text-dark: #1A1A1A;
+  --brand-primary: #E67B26;
+  --brand-primary-dark: #C96A1A;
+  --brand-secondary: #EDE4CB;
+  --brand-black: #1A1A1A;
+  --brand-white: #FFFFFF;
+  --brand-text-on-primary: #FFFFFF;
+  --brand-text-dark: #1A1A1A;
+  --brand-text-muted: #6B6B6B;
+  --brand-border: #D9D0B8;
+  --brand-error: #D32F2F;
+  --brand-success: #2E7D32;
 }
 
 @font-face {
@@ -206,9 +213,9 @@ nav .logo {
 
 .btn {
     font-size: 1.1rem;
-    font-weight: 300;
+    font-weight: 600;
     border: none;
-    border-radius: 0px;
+    border-radius: 50px;
     padding: 15px;
     width: 100% !important;
 }
@@ -270,7 +277,7 @@ body {
 
 body {
     --text-color: #212121;
-        --bkg-color: #f4f4f4;
+        --bkg-color: #EDE4CB;
         --footer-bkg-color: #f4f4f4;
         --footer-text-color: #1A1A1A;
         --bkg-card-color: #FFFFFF;
