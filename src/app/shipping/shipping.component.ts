@@ -186,7 +186,7 @@ export class ShippingComponent implements OnInit {
       this.order = order
       this.order.description =  `ord-${this.order.id}`,
       this.storageService.order = order
-      window.location.href = `${environment.izingaPayUrl}?Status=init&type=yoco&TransactionReference=${order.id}&callback=${environment.ozow_succeess_url}`
+      window.location.href = `${environment.izingaPayUrl}?Status=init&type=yoco&TransactionReference=${order.id}&callback=${window.location.origin}/payment`
     })
   }
 
