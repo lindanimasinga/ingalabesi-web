@@ -4,6 +4,7 @@ import { StoreProfile } from '../model/models';
 import { IzingaOrderManagementService } from '../service/izinga-order-management.service';
 import { StorageService } from '../service/storage-service.service';
 import {Utils} from '../utils/utils'
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main',
@@ -19,14 +20,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var shortName =  this.activatedRoute.snapshot.paramMap.get('shortname')
-    if(shortName == null) {
-      var url = window.location.origin
-      var urlParts = url.split("\.")
-      shortName = urlParts.length == 3 ? urlParts[1] : urlParts[0]
-    }
-    console.log("shortname is " + shortName)
-    this.izingaService.getStoreById(shortName)
+    this.izingaService.getStoreById(environment.storeId)
     .subscribe(shop => {
       this.storageService.shop = shop;
       setTimeout(() => Utils.applyCustomeTheme(shop.brandPrimaryColor), 100)
