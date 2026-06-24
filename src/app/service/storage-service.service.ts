@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BasketItem, Basket, Order, UserProfile, StoreProfile } from '../model/models';
-import { UkhesheUser } from '../model/ukheshe-user';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,6 @@ export class StorageService {
   BASKET_KEY = "sdfsdfljsdf";
   ORDER_KEY = "fuiwerfbsk";
   jwt: string;
-  ukhesheUser: UkhesheUser;
   shop: StoreProfile;
   orders: Array<Order>;
   cache: Storage = window.localStorage
