@@ -167,4 +167,24 @@ export class StorageService {
     this.basket = this.basket
   }
 
+  logout(): void {
+    this._phoneNumber = null;
+    this._phoneVerified = null;
+    this._fcmToken = null;
+    this._currentLocation = null;
+    this._shoppingList = null;
+    this._basket = null;
+    this._userProfile = null;
+    this.shop = null;
+    this._order = null;
+    this.cache.removeItem(this.PHONE_NUMBER_KEY);
+    this.cache.removeItem(this.PHONE_VERIFIED_KEY);
+    this.cache.removeItem(this.TOKEN_KEY);
+    this.cache.removeItem(this.CUURENT_LOCATION_KEY);
+    this.cache.removeItem(this.SHOPPINGLIST_KEY);
+    this.cache.removeItem(this.BASKET_KEY);
+    this.cache.removeItem(this.USER_PROFILE_KEY);
+    this.cache.removeItem(this.ORDER_KEY);
+  }
+
 }

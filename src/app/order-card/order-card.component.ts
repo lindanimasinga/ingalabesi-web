@@ -28,7 +28,7 @@ export class OrderCardComponent implements OnInit {
 
   viewOrderDetails() {
     if(this.order.stage == Order.StageEnum._0CUSTOMERNOTPAID) {
-      window.location.href = `${environment.izingaPayUrl}?Status=init&type=yoco&TransactionReference=${this.order.id}&callback=${environment.ozow_succeess_url}`
+      window.location.href = `${environment.izingaPayUrl}?Status=init&type=yoco&TransactionReference=${this.order.id}&callback=${window.location.origin + '/payment'}`
     } else {
       this.router.navigate([`/${this.order.shopId}/order/${this.order.id}`], { queryParams: 
         {"Status": "unpaid", "type": "none", 
