@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cs-clothing-web": {
+    "ingalabesi-web": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/cs-clothing-web",
+            "outputPath": "dist/ingalabesi-web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cs-clothing-web:build"
+            "browserTarget": "ingalabesi-web:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "cs-clothing-web:build:production"
+              "browserTarget": "ingalabesi-web:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cs-clothing-web:build"
+            "browserTarget": "ingalabesi-web:build"
           }
         },
         "test": {
@@ -115,18 +115,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "cs-clothing-web:serve"
+            "devServerTarget": "ingalabesi-web:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "cs-clothing-web:serve:production"
+              "devServerTarget": "ingalabesi-web:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "cs-clothing-web",
+  "defaultProject": "ingalabesi-web",
   "cli": {
     "analytics": false
   }
