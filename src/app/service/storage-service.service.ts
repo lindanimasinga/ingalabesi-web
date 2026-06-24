@@ -10,6 +10,7 @@ export class StorageService {
 
   USER_PROFILE_KEY = "sdfwefdsfsd";
   BASKET_KEY = "sdfsdfljsdf";
+  CURRENT_STORE_ID_KEY = "currentStoreId";
   ORDER_KEY = "fuiwerfbsk";
   PHONE_NUMBER_KEY = "knsdevwruweildkf";
   PHONE_VERIFIED_KEY = "lkjhsdbvskd";
@@ -30,7 +31,21 @@ export class StorageService {
   _userProfile: UserProfile;
   errorMessage: String;
 
+  _currentStoreId: string;
+
   constructor() { }
+
+  get currentStoreId(): string {
+    if (this._currentStoreId == null) {
+      this._currentStoreId = this.cache.getItem(this.CURRENT_STORE_ID_KEY);
+    }
+    return this._currentStoreId;
+  }
+
+  set currentStoreId(storeId: string) {
+    this._currentStoreId = storeId;
+    this.cache.setItem(this.CURRENT_STORE_ID_KEY, storeId);
+  }
 
   get userProfile() {
     if(this._userProfile == null) {
