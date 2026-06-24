@@ -48,7 +48,9 @@
 .main-content-container {
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 0 80px 0;
+  padding: 16px 16px 80px 16px;
+  background: #FFFFFF;
+  min-height: 100vh;
 }
 .bottom-tab-bar {
   position: fixed;

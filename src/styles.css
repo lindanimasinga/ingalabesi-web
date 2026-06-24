@@ -277,7 +277,7 @@ body {
 
 body {
     --text-color: #212121;
-        --bkg-color: #EDE4CB;
+        --bkg-color: #FFFFFF;
         --footer-bkg-color: #f4f4f4;
         --footer-text-color: #1A1A1A;
         --bkg-card-color: #FFFFFF;
@@ -286,12 +286,13 @@ body {
         --btn-bg-selected-color: #E67B26;
         --btn-pill-color: #E67B26;
     --btn-red-color: #D66247;
-        --bkg-logo: url('/assets/images/ingalabesi-logo.png')
+        --bkg-logo: url('/assets/images/ingalabesi-logo.png');
+    background-color: #FFFFFF;
   }
 
 body.dark-theme {
     --text-color: #F8F7F7;
-    --bkg-color: #212121;
+    --bkg-color: #000000;
     --bkg-card-color: #2D2D2D;
     --footer-bkg-color: #000000;
     --footer-text-color: #eee;
