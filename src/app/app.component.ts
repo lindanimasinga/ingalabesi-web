@@ -14,7 +14,7 @@ declare var firebase: any
 
 export class AppComponent {
 
-  title = 'cs-clothing-web';
+  title = 'ingalabesi-web';
 
   constructor(private router: Router, private storage: StorageService) {
   }
