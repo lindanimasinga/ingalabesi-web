@@ -24,9 +24,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { OtherItemsComponent } from './other-items/other-items.component';
 import { OrderItemHistoryComponent } from './order-item-history/order-item-history.component';
 import { PlaceAutocompleteComponent } from './place-autocomplete/place-autocomplete.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
 import { MainComponent } from './main/main.component';
-import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 
 @NgModule({
   declarations: [
@@ -41,9 +39,7 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     OtherItemsComponent,
     OrderItemHistoryComponent,
     PlaceAutocompleteComponent,
-    ContactUsComponent,
     MainComponent,
-    TermsConditionsComponent
   ],
   imports: [
     BrowserModule,
