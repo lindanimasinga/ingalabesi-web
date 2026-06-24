@@ -1,26 +1,25 @@
 {
-  "short_name": "iZinga",
-  "name": "iZinga",
-  "gcm_sender_id": "315529266651",
-  "description": "The best foods in town",
+  "name": "Ingalabesi — The Chicken King",
+  "short_name": "Ingalabesi",
   "icons": [{
-    "src": "images/izinga-short.png",
+    "src": "images/logo-hires.jpg",
     "type": "image/png",
     "sizes": "128x128"
   }, {
-    "src": "images/izinga-short.png",
+    "src": "images/logo-hires.jpg",
     "type": "image/png",
     "sizes": "152x152"
   }, {
-    "src": "images/izinga-short.png",
+    "src": "images/logo-hires.jpg",
     "type": "image/png",
     "sizes": "144x144"
   }, {
-    "src": "images/izinga-short.png",
+    "src": "images/logo-hires.jpg",
     "type": "image/png",
     "sizes": "192x192"
   }],
-  "background_color": "#494949",
-  "theme_color": "#494949",
-  "display": "standalone"
+  "background_color": "#EDE4CB",
+  "theme_color": "#E67B26",
+  "display": "standalone",
+  "start_url": "https://www.ingalabesi.co.za/"
 }
