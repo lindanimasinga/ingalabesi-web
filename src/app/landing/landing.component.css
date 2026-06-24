@@ -17,6 +17,7 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+  background: linear-gradient(160deg, #1A1A1A 0%, #2C2C2C 60%, #E67B26 100%);
 }
 
 .landing-hero__image {
