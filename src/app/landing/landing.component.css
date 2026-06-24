@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;900&display=swap');
+
+.landing-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  position: relative;
+}
+
+/* HERO */
+.landing-hero {
+  width: 100%;
+  height: 590px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.landing-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  /* Placeholder background until hero photo is provided */
+  background: #1A1A1A;
+}
+
+.landing-hero__logo {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.landing-hero__icon {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  /* Drop shadow so logo reads on any photo background */
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* ACTIONS */
+.landing-actions {
+  background: #ffffff;
+  padding: 20px 16px 0;
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px) + 16px);
+  flex: 1;
+}
+
+.btn-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 56px;
+  border-radius: 50px;
+  border: none;
+  font-family: 'Catamaran', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0 24px;
+  letter-spacing: 0.3px;
+  transition: transform 0.1s ease, filter 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-pill:active {
+  transform: scale(0.97);
+  filter: brightness(0.88);
+}
+
+.btn-pill:focus-visible {
+  outline: 3px solid #E67B26;
+  outline-offset: 2px;
+}
+
+.btn-pill__icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.btn-pill--book {
+  background-color: #E67B26;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(230, 123, 38, 0.35);
+}
+
+.btn-pill--order {
+  background-color: #1A1A1A;
+}
+
+.landing-contact {
+  text-align: center;
+  font-family: 'Catamaran', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A1A1A;
+  letter-spacing: 0.5px;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+/* BOTTOM TAB BAR */
+.bottom-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: 64px;
+  background: #ffffff;
+  border-top: 1px solid #F0F0F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 24px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 48px;
+  min-height: 48px;
+  justify-content: center;
+}
+
+.tab-item__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.tab-item__label {
+  font-family: 'Catamaran', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.tab-item--active .tab-item__label {
+  color: #E67B26;
+}
+
+.tab-item--inactive .tab-item__label {
+  color: #AAAAAA;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-pill { transition: none; }
+}

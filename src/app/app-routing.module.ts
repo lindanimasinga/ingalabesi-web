@@ -9,11 +9,13 @@ import { OrdersComponent } from './orders/orders.component';
 import { OrderItemHistoryComponent } from './order-item-history/order-item-history.component';
 import { MainComponent } from './main/main.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LandingComponent } from './landing/landing.component';
 
 
 const routes: Routes = [
+  { path: '', component: LandingComponent },
   {
-    path: '', component: MainComponent,
+    path: 'home', component: MainComponent,
     children: [
       { path: '', component: HomeComponent },
       { path: 'item/:id', component: ShopItemDescrComponent },

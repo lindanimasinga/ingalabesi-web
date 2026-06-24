@@ -24,10 +24,12 @@ import { OtherItemsComponent } from './other-items/other-items.component';
 import { OrderItemHistoryComponent } from './order-item-history/order-item-history.component';
 import { PlaceAutocompleteComponent } from './place-autocomplete/place-autocomplete.component';
 import { MainComponent } from './main/main.component';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LandingComponent,
     ShopItemComponent,
     ShopItemDescrComponent,
     HomeComponent,
