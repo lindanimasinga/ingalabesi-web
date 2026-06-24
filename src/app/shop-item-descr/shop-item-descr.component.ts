@@ -56,7 +56,7 @@ export class ShopItemDescrComponent implements OnInit {
 
     this.basketItem = {
       name: this.shopItem.name,
-      price: this.shopItem.price * this.quantity,
+      price: this.shopItem.price,
       discountPerc: this.shopItem.discountPerc,
       options: this.shopItem.mandatorySelection,
       quantity: this.quantity,
