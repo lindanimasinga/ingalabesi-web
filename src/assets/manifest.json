@@ -1,6 +1,6 @@
 {
-  "short_name": "Celeste Monique Life Style",
-  "name": "Celeste Monique Life Style",
+  "name": "Ingalabesi — The Chicken King",
+  "short_name": "Ingalabesi",
   "icons": [{
     "src": "images/logo-hires.jpg",
     "type": "image/png",
@@ -18,7 +18,8 @@
     "type": "image/png",
     "sizes": "192x192"
   }],
-  "background_color": "#494949",
-  "theme_color": "#494949",
-  "display": "standalone"
+  "background_color": "#EDE4CB",
+  "theme_color": "#E67B26",
+  "display": "standalone",
+  "start_url": "https://www.ingalabesi.co.za/"
 }
