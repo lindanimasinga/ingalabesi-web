@@ -86,7 +86,8 @@ export class LoginComponent {
         this.userProfile = user
         this.storageService.userProfile = user;
       }
-      location.href = document.referrer
+      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+      this.router.navigateByUrl(returnUrl);
     })
   }
 
