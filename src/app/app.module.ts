@@ -9,7 +9,6 @@ import { ShopItemComponent } from './shop-item/shop-item.component';
 import { ShopItemDescrComponent } from './shop-item-descr/shop-item-descr.component';
 import { HomeComponent } from './home/home.component';
 import { IzingaOrderManagementService} from './service/izinga-order-management.service'
-import {UkhesheService} from './service/ukheshe.service'
 import {FirebaseService} from './service/firebase.service'
 import { StorageService} from './service/storage-service.service';
 import {PaymentService}  from './service/payment.service';
@@ -23,13 +22,8 @@ import { ShippingComponent } from './shipping/shipping.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OtherItemsComponent } from './other-items/other-items.component';
-import { UkheshePaymentComponent } from './ukheshe-payment/ukheshe-payment.component';
-import { UkhesheSignupComponent } from './ukheshe-signup/ukheshe-signup.component';
-import { UkhesheMasterpassComponent } from './ukheshe-masterpass/ukheshe-masterpass.component';
 import { OrderItemHistoryComponent } from './order-item-history/order-item-history.component';
-import { OzowPaymentComponent } from './ozow-payment/ozow-payment.component';
 import { PlaceAutocompleteComponent } from './place-autocomplete/place-autocomplete.component';
-import { PayfastComponent } from './payfast/payfast.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { MainComponent } from './main/main.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
@@ -45,13 +39,8 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     PaymentComponent,
     OrdersComponent,
     OtherItemsComponent,
-    UkheshePaymentComponent,
-    UkhesheSignupComponent,
-    UkhesheMasterpassComponent,
     OrderItemHistoryComponent,
-    OzowPaymentComponent,
     PlaceAutocompleteComponent,
-    PayfastComponent,
     ContactUsComponent,
     MainComponent,
     TermsConditionsComponent
@@ -60,7 +49,6 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatIconModule,
@@ -72,7 +60,6 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     IzingaOrderManagementService,
     StorageService,
     PaymentService,
-    UkhesheService,
     FirebaseService
   ],
   bootstrap: [AppComponent]
