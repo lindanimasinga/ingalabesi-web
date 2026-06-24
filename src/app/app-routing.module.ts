@@ -8,6 +8,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderItemHistoryComponent } from './order-item-history/order-item-history.component';
 import { MainComponent } from './main/main.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 const routes: Routes = [
@@ -17,10 +18,10 @@ const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'item/:id', component: ShopItemDescrComponent },
       { path: 'cart', component: CheckoutComponent },
-      { path: 'shipping', component: ShippingComponent },
-      { path: 'payment', component: PaymentComponent },
-      { path: 'orders', component: OrdersComponent },
-      { path: 'order/:id', component: OrderItemHistoryComponent },
+      { path: 'shipping', component: ShippingComponent, canActivate: [AuthGuard] },
+      { path: 'payment', component: PaymentComponent, canActivate: [AuthGuard] },
+      { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+      { path: 'order/:id', component: OrderItemHistoryComponent, canActivate: [AuthGuard] },
     ]
   },
 ];
