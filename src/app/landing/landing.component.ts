@@ -13,6 +13,10 @@ export class LandingComponent {
     this.router.navigate(['/home']);
   }
 
+  openProfile(): void {
+    this.router.navigate(['/home/orders']);
+  }
+
   bookEvent(): void {
     window.open(
       'https://wa.me/27617002915?text=Hi%2C%20I%27d%20like%20to%20book%20an%20event',

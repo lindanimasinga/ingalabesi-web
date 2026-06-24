@@ -22,9 +22,7 @@
 
 .landing-hero__image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
+  object-fit: contain;
   display: block;
   /* Placeholder background until hero photo is provided */
   background: #1A1A1A;
@@ -138,11 +136,23 @@
   align-items: center;
   gap: 3px;
   padding: 6px 24px;
+  border: 0;
+  background: transparent;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   min-width: 48px;
   min-height: 48px;
   justify-content: center;
+}
+
+.tab-item:focus-visible {
+  outline: 2px solid #E67B26;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.tab-item--active {
+  cursor: default;
 }
 
 .tab-item__icon {

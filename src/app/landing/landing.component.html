@@ -7,13 +7,6 @@
       src="assets/images/ingalabesi-hero.jpg"
       alt="Ingalabesi The Chicken King — authentic grilled chicken"
     />
-    <div class="landing-hero__logo">
-      <img
-        class="landing-hero__icon"
-        src="assets/images/ingalabesi-logo.png"
-        alt="Ingalabesi logo"
-      />
-    </div>
   </section>
 
   <!-- ACTIONS -->
@@ -54,27 +47,27 @@
 
   <!-- BOTTOM TAB BAR -->
   <nav class="bottom-tab-bar" aria-label="Main navigation">
-    <div class="tab-item tab-item--active">
+    <button class="tab-item tab-item--active" type="button" aria-current="page" aria-label="Home">
       <svg class="tab-item__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M3 12L12 4L21 12V20C21 20.55 20.55 21 20 21H15V16H9V21H4C3.45 21 3 20.55 3 20V12Z" fill="#E67B26"/>
       </svg>
       <span class="tab-item__label">Home</span>
-    </div>
-    <div class="tab-item tab-item--inactive" (click)="orderNow()" role="button" aria-label="Menu">
+    </button>
+    <button class="tab-item tab-item--inactive" type="button" (click)="orderNow()" aria-label="Menu">
       <svg class="tab-item__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <line x1="3" y1="6" x2="21" y2="6" stroke="#AAAAAA" stroke-width="2" stroke-linecap="round"/>
         <line x1="3" y1="12" x2="21" y2="12" stroke="#AAAAAA" stroke-width="2" stroke-linecap="round"/>
         <line x1="3" y1="18" x2="21" y2="18" stroke="#AAAAAA" stroke-width="2" stroke-linecap="round"/>
       </svg>
       <span class="tab-item__label">Menu</span>
-    </div>
-    <div class="tab-item tab-item--inactive" role="button" aria-label="Profile">
+    </button>
+    <button class="tab-item tab-item--inactive" type="button" (click)="openProfile()" aria-label="Profile">
       <svg class="tab-item__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <circle cx="12" cy="8" r="4" stroke="#AAAAAA" stroke-width="2"/>
         <path d="M4 20C4 17 7.58 15 12 15C16.42 15 20 17 20 20" stroke="#AAAAAA" stroke-width="2" stroke-linecap="round"/>
       </svg>
       <span class="tab-item__label">Profile</span>
-    </div>
+    </button>
   </nav>
 
 </div>

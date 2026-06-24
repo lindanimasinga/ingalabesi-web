@@ -10,10 +10,12 @@ import { OrderItemHistoryComponent } from './order-item-history/order-item-histo
 import { MainComponent } from './main/main.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'home', component: MainComponent,
     children: [

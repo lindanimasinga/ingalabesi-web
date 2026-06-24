@@ -9,7 +9,7 @@ export var environment = {
   storeId: "77e2c029-3ea2-4a67-9722-603ff46d89e7",
   storeType: StoreProfile.StoreTypeEnum.FOOD,
   messengerId: "ffd4c856-644f-4453-a5ed-84689801a747",
-  izingaUrl: "https://api-uat.izinga.co.za/",
+  izingaUrl: "https://api.izinga.co.za",
   izingaPayUrl: "http://localhost:4201",
   appVersion: "1.0.0",
   range: 0.09999,

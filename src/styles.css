@@ -270,16 +270,16 @@ body {
 
 body {
     --text-color: #212121;
-    --bkg-color: #F8F7F7;
-    --footer-bkg-color: #be833d;
-    --footer-text-color: white;
-    --bkg-card-color: #f3f2f2;
+        --bkg-color: #f4f4f4;
+        --footer-bkg-color: #f4f4f4;
+        --footer-text-color: #1A1A1A;
+        --bkg-card-color: #FFFFFF;
     --btn-txt-color: #707070;
-    --btn-bg-color: #be833d;
-    --btn-bg-selected-color: #be833d;
-    --btn-pill-color: #1083A5;
+        --btn-bg-color: #E67B26;
+        --btn-bg-selected-color: #E67B26;
+        --btn-pill-color: #E67B26;
     --btn-red-color: #D66247;
-    --bkg-logo: url('/assets/images/izinga-logo.png')
+        --bkg-logo: url('/assets/images/ingalabesi-logo.png')
   }
 
 body.dark-theme {
@@ -289,9 +289,9 @@ body.dark-theme {
     --footer-bkg-color: #000000;
     --footer-text-color: #eee;
     --btn-txt-color: #2e2b2b;
-    --btn-bg-color: #be833d;
-    --btn-pill-color: #1083A5;
-    --bkg-logo: url('/assets/images/izinga-logo.png')
+        --btn-bg-color: #E67B26;
+        --btn-pill-color: #E67B26;
+        --bkg-logo: url('/assets/images/ingalabesi-logo.png')
   }
 
 

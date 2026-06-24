@@ -1,28 +1,29 @@
-<section class="hero-section">
-  <div class="">
-    <div class="mb-1 mt-1 py-3">
+<section class="hero-section home-shell">
+  <div class="home-panel">
+    <div class="home-header">
       <div>
-        <h1 class="h5 page-header">{{shop?.name}} Menu</h1>
-        <p class="sr-only">Browse our premium collection of fashion, beauty, and lifestyle products</p>
+        <h1 class="h5 page-header home-title">{{shop?.name}} Menu</h1>
+        <p class="sr-only">Browse flame grilled chicken, meals, sides, and specials.</p>
       </div>
     </div>
 
     <!-- Search bar -->
-    <div class="search-section mb-3">
+    <div class="search-section home-search-wrap">
       <label for="product-search" class="sr-only">Search products</label>
       <input
+        #searchInput
         id="product-search"
         type="search"
-        class="form-control"
-        placeholder="Search items by name..."
-        (input)="shopItemsByName($event.target.value)"
+        class="form-control home-search-input"
+        placeholder="Search meals, wings, burgers, and more"
+        (input)="shopItemsByName(searchInput.value)"
         aria-label="Search items by name"
         aria-describedby="search-help"
       />
-      <div id="search-help" class="sr-only">Type to search through available products</div>
+      <div id="search-help" class="sr-only">Type to search through menu items by name</div>
     </div>
 
-    <div class="d-flex align-items-center row" role="grid" aria-label="Product search results" *ngIf="searchItems?.length > 0">
+    <div class="d-flex align-items-center row home-results-grid" role="grid" aria-label="Product search results" *ngIf="searchItems?.length > 0">
         <div [id]="'item'+number" *ngFor="let item of searchItems; let number = index"  
              class="col-6 col-md-4 col-lg-3 col-xl-2"
              role="gridcell"
@@ -30,17 +31,22 @@
           <app-shop-item [shop]="shop" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item>
         </div>
     </div>
+
+    <div class="search-empty-state" role="status" *ngIf="showNoSearchResults">
+      <p class="search-empty-state__title">No items found for "{{searchTerm}}"</p>
+      <p class="search-empty-state__text">Try a shorter search term or browse categories below.</p>
+    </div>
   </div>
 </section>
 
-<section class="product-categories" aria-label="Product categories">
+<section class="product-categories home-shell" aria-label="Product categories" *ngIf="hasStockItems">
   <h2 class="sr-only">Shop by Category</h2>
   <nav class="categories-nav" role="navigation" aria-label="Product categories">
-    <div *ngFor="let cat of categories; let catIndex = index" class="categories">
+    <div *ngFor="let cat of categories; let catIndex = index" class="categories home-category-card">
       <div class="accordion" [id]="'accordion-' + catIndex" role="tablist">
         <h3 class="category-header">
           <button 
-            class="category my-1 p-2 btn btn-link w-100 text-left" 
+            class="category btn btn-link w-100 text-left home-category-btn" 
             type="button" 
             data-toggle="collapse" 
             [attr.data-target]="'#'+replaceSpecialChars(cat)" 
@@ -60,7 +66,7 @@
           [attr.aria-labelledby]="'heading-' + replaceSpecialChars(cat)"
           [attr.data-parent]="'#accordion-' + catIndex"
           role="tabpanel">
-          <div class="d-flex align-items-center row" role="grid" [attr.aria-label]="cat + ' products'">
+          <div class="d-flex align-items-center row home-results-grid" role="grid" [attr.aria-label]="cat + ' products'">
             <div 
               [id]="'item'+number" 
               *ngFor="let item of shopItems(cat); let number = index" 
@@ -76,4 +82,11 @@
       </div>
     </div>
   </nav>
+</section>
+
+<section class="home-shell" *ngIf="showNoStockItems">
+  <div class="stock-empty-state" aria-live="polite">
+    <h2 class="stock-empty-state__title">Menu items are coming soon</h2>
+    <p class="stock-empty-state__text">We are updating this menu. Please check back shortly or contact us directly.</p>
+  </div>
 </section>

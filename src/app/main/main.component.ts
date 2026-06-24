@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { StoreProfile } from '../model/models';
 import { IzingaOrderManagementService } from '../service/izinga-order-management.service';
@@ -15,7 +15,8 @@ export class MainComponent implements OnInit {
 
   constructor(private storageService: StorageService,
     private izingaService: IzingaOrderManagementService,
-    private router: Router) {
+    private router: Router,
+    private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -25,15 +26,18 @@ export class MainComponent implements OnInit {
         this.storageService.shop = shop;
         this.storageService.currentStoreId = environment.storeId;
         setTimeout(() => Utils.applyCustomeTheme(shop.brandPrimaryColor), 100);
+        this.cdr.detectChanges();
       },
       error => {
         console.error('Failed to load store', error);
         this.storageService.errorMessage = 'Failed to load store. Please refresh the page.';
+        this.cdr.detectChanges();
       }
     );
 
     if(this.hasError) {
       this.storageService.errorMessage = null;
+      this.cdr.detectChanges();
     }
   }
 

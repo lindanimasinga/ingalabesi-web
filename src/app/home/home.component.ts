@@ -15,12 +15,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit {
 
-  images: Array<String>
+  images: string[]
   promotions: Promotion[] = []
-  categories: Set<String> = new Set<String>()
+  categories: Set<string> = new Set<string>()
   shop: StoreProfile;
   startOrder = false;
-  searchItems: Stock[];
+  searchItems: Stock[] = [];
+  searchTerm = '';
+  isLoadingStock = true;
 
   constructor(
     protected izingaService: IzingaOrderManagementService, 
@@ -35,17 +37,24 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     // Set SEO for home page
     this.seoService.setHomePageSEO();
-    
-    console.log(`store id 2 is ${JSON.stringify(this.activatedRoute.paramMap)}`)
-    var shortName =  this.activatedRoute.snapshot.paramMap.get('shortname')
-    console.log("shortname is " + shortName)
-    if (shortName != this.storage.basket?.storeId) {
+
+    // Prefer route store id when present, otherwise fall back to cached/current single-store config.
+    const routeStoreId = this.activatedRoute.snapshot.paramMap.get('shortname');
+    const resolvedStoreId = routeStoreId || this.storage.currentStoreId || environment.storeId;
+
+    if (resolvedStoreId != this.storage.basket?.storeId) {
       this.storage.clearOrder()
     }
-    this.izingaService.getStoreById(shortName)
+
+    this.izingaService.getStoreById(resolvedStoreId)
     .subscribe(shop => {
       this.shop = shop;
       this.storage.shop = shop;
+      this.storage.currentStoreId = shop?.id || resolvedStoreId;
+
+      const stockList = [...(this.shop?.stockList || [])]
+        .sort((a, b) => this.isPromotion(a) ? -1 : 1);
+      this.shop.stockList = stockList;
       
       // Update SEO with store-specific information
       this.seoService.updateMetaTags({
@@ -54,13 +63,17 @@ export class HomeComponent implements OnInit {
         keywords: `${shop.name}, food delivery, restaurant delivery, ${shop.name} menu, South Africa, order online, fast food`
       });
       
-      this.categories = new Set(this.shop.stockList.sort((a, b) => this.isPromotion(a) ? -1 : 1).map(stk => stk.group))
+      this.categories = new Set(stockList.map(stk => stk.group).filter(group => !!group));
+      this.isLoadingStock = false;
       
       //get promotions
       this.izingaService.getAllPromotionsByStoreId(this.shop.id)
           .subscribe(promotions => {
             this.promotions = promotions
           })
+    }, () => {
+      this.isLoadingStock = false;
+      this.storage.errorMessage = 'Unable to load menu items right now. Please try again.';
     })
   }
 
@@ -72,17 +85,40 @@ export class HomeComponent implements OnInit {
     return this.shop
   }
 
-  get cssImageUrl(): String {
+  get cssImageUrl(): string {
     var image = this.sanitizer.bypassSecurityTrustStyle(this.store.imageUrl)
     return `url('${this.store.imageUrl}')`
   }
 
   shopItems(category?: string): Stock[] {
-    return this.shop?.stockList.filter(item => item.group?.toLowerCase() == category?.toLowerCase())
+    return this.shop?.stockList.filter(item => item.group?.toLowerCase() == category?.toLowerCase()) || []
   }
 
   shopItemsByName(name?: string) {
-    this.searchItems = name ? this.shop?.stockList.filter(item => item.name?.toLowerCase().includes(name?.toLowerCase())) : []
+    this.searchTerm = (name || '').trim();
+    if (!this.searchTerm) {
+      this.searchItems = [];
+      return;
+    }
+
+    const normalizedName = this.searchTerm.toLowerCase();
+    this.searchItems = this.shop?.stockList.filter(item => item.name?.toLowerCase().includes(normalizedName)) || []
+  }
+
+  get hasStockItems(): boolean {
+    return (this.shop?.stockList?.length || 0) > 0;
+  }
+
+  get hasSearchTerm(): boolean {
+    return this.searchTerm.length > 0;
+  }
+
+  get showNoSearchResults(): boolean {
+    return this.hasSearchTerm && this.searchItems.length === 0;
+  }
+
+  get showNoStockItems(): boolean {
+    return !this.hasSearchTerm && !this.isLoadingStock && !this.hasStockItems;
   }
 
   hasItemsInCart(): boolean {
@@ -99,7 +135,7 @@ export class HomeComponent implements OnInit {
     return this.isPromotionCategory(stock.group)
   }
 
-  isPromotionCategory(category: string): boolean {
+  isPromotionCategory(category?: string): boolean {
     var promoTags = ["deal", "special", "promotion", "promotions", "deals", "specials", "family meals", "featured items"]
     return promoTags.includes(category?.toLowerCase())
   }

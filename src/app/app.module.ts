@@ -25,11 +25,13 @@ import { OrderItemHistoryComponent } from './order-item-history/order-item-histo
 import { PlaceAutocompleteComponent } from './place-autocomplete/place-autocomplete.component';
 import { MainComponent } from './main/main.component';
 import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
+    LoginComponent,
     ShopItemComponent,
     ShopItemDescrComponent,
     HomeComponent,

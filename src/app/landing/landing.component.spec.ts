@@ -30,6 +30,12 @@ describe('LandingComponent', () => {
     expect(spy).toHaveBeenCalledWith(['/home']);
   });
 
+  it('openProfile should navigate to /home/orders', () => {
+    const spy = spyOn(router, 'navigate');
+    component.openProfile();
+    expect(spy).toHaveBeenCalledWith(['/home/orders']);
+  });
+
   it('bookEvent should open WhatsApp link in new tab', () => {
     const spy = spyOn(window, 'open');
     component.bookEvent();
