@@ -17,8 +17,6 @@ import { FirebaseService } from '../service/firebase.service';
 })
 export class ShippingComponent implements OnInit {
 
-  //@ViewChild("placesRef") placesRef : GooglePlaceDirective;
-  
   isVerificationRequested = false
   code: string
   shippingBuildingType: ShippingData.BuildingTypeEnum
