@@ -39,49 +39,29 @@
   </div>
 </section>
 
-<section class="product-categories home-shell" aria-label="Product categories" *ngIf="hasStockItems">
-  <h2 class="sr-only">Shop by Category</h2>
-  <nav class="categories-nav" role="navigation" aria-label="Product categories">
-    <div *ngFor="let cat of categories; let catIndex = index" class="categories home-category-card">
-      <div class="accordion" [id]="'accordion-' + catIndex" role="tablist">
-        <h3 class="category-header">
-          <button 
-            class="category btn btn-link w-100 text-left home-category-btn" 
-            type="button" 
-            data-toggle="collapse" 
-            [attr.data-target]="'#'+replaceSpecialChars(cat)" 
-            [attr.aria-expanded]="!cat || isPromotionCategory(cat) ? 'true' : 'false'"
-            [attr.aria-controls]="replaceSpecialChars(cat)"
-            [attr.id]="'heading-' + replaceSpecialChars(cat)"
-            role="tab">
-            {{cat}}
-            <span class="sr-only">(Click to expand category)</span>
-          </button>
-        </h3>
-
-        <div 
-          [id]="replaceSpecialChars(cat)" 
-          class="collapse" 
-          [ngClass]="{'show': !cat || isPromotionCategory(cat)}" 
-          [attr.aria-labelledby]="'heading-' + replaceSpecialChars(cat)"
-          [attr.data-parent]="'#accordion-' + catIndex"
-          role="tabpanel">
-          <div class="d-flex align-items-center row home-results-grid" role="grid" [attr.aria-label]="cat + ' products'">
-            <div 
-              [id]="'item'+number" 
-              *ngFor="let item of shopItems(cat); let number = index" 
-              [ngClass]="{'col-12 col-md-6 col-lg-4 col-xl-3': isPromotion(item), 'col-6 col-md-4 col-lg-3 col-xl-2': !isPromotion(item)}" 
-              class=""
-              role="gridcell"
-              [attr.aria-label]="'Product ' + (number + 1) + ' in ' + cat + ' category'">
-              <app-shop-item-large *ngIf="isPromotion(item)" [shop]="shop" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item-large>
-              <app-shop-item *ngIf="!isPromotion(item)" [shop]="shop" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item>
-            </div>
-          </div>
+<section class="product-categories home-shell" aria-label="Menu categories" *ngIf="hasStockItems">
+  <div *ngFor="let cat of categories; let catIndex = index" class="home-category-card mb-2">
+    <button
+      type="button"
+      class="home-category-btn"
+      [class.expanded]="isCategoryExpanded(cat)"
+      (click)="toggleCategory(cat)"
+      [attr.aria-expanded]="isCategoryExpanded(cat)">
+      {{cat}}
+      <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="category-items" *ngIf="isCategoryExpanded(cat)">
+      <div class="d-flex flex-wrap home-results-grid">
+        <div *ngFor="let item of shopItems(cat); let number = index"
+             class="col-6 col-md-4"
+             [id]="'item'+number">
+          <app-shop-item [shop]="shop" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item>
         </div>
       </div>
     </div>
-  </nav>
+  </div>
 </section>
 
 <section class="home-shell" *ngIf="showNoStockItems">

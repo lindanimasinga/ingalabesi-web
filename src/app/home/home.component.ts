@@ -144,6 +144,19 @@ export class HomeComponent implements OnInit {
     return input?.replace(/[^a-zA-Z0-9]/g, '_');
   }
 
-  
+  expandedCategories: Set<string> = new Set();
+
+  toggleCategory(cat: string): void {
+    if (this.expandedCategories.has(cat)) {
+      this.expandedCategories.delete(cat);
+    } else {
+      this.expandedCategories.add(cat);
+    }
+  }
+
+  isCategoryExpanded(cat: string): boolean {
+    if (this.isPromotionCategory(cat)) return true;
+    return this.expandedCategories.has(cat);
+  }
 
 }
