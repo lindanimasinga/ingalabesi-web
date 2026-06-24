@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+
 import { UserProfile, Order, ShippingData } from '../model/models';
 import { IzingaOrderManagementService } from '../service/izinga-order-management.service';
 import { StorageService } from '../service/storage-service.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError, delay } from 'rxjs/operators';
 import { from, Observable, of, throwError } from 'rxjs';
 import { FirebaseService } from '../service/firebase.service';
 
@@ -18,7 +19,6 @@ export class ShippingComponent implements OnInit {
 
   //@ViewChild("placesRef") placesRef : GooglePlaceDirective;
   
-  isPhoneNumberVerified = false
   isVerificationRequested = false
   code: string
   shippingBuildingType: ShippingData.BuildingTypeEnum
@@ -26,6 +26,19 @@ export class ShippingComponent implements OnInit {
   shippingBuildingUnitNumber: string
   shippingBuildingName: string
   additionalInstructions: string
+  _newAddressLatitude: number
+  _newAddressLongitude: number
+
+  fromAddress: string
+  fromBuildingType: ShippingData.BuildingTypeEnum
+  fromUnitNumber: string
+  fromBuildingName: string
+  fromLatitude: string
+  fromLongitude: string
+
+  deliverySchedule = ShippingData.TypeEnum.DELIVERY
+  LATER = ShippingData.TypeEnum.SCHEDULED_DELIVERY
+  NOW = ShippingData.TypeEnum.DELIVERY
 
   userProfile: UserProfile = {
     imageUrl: "https://pbs.twimg.com/media/C1OKE9QXgAAArDp.jpg",
@@ -35,6 +48,10 @@ export class ShippingComponent implements OnInit {
   userAlreadyRegistered: boolean;
   hasError: boolean;
   errorMessage: string;
+  messegers: UserProfile[];
+  selectedDate?: string
+  selectedTime?: string
+  pickUpDate?: Date
 
   constructor(private izingaOrderManager: IzingaOrderManagementService,
     private storageService: StorageService,
@@ -43,72 +60,76 @@ export class ShippingComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    if (this.storageService.userProfile && this.isPhoneNumberVerified) {
+      this.userProfile = this.storageService.userProfile
+      this.isVerificationRequested = true
+      setTimeout(() => this.loadNearbyMessengers(), 5000)
+    } else {
+      this.userProfile.mobileNumber = this.storageService.phoneNumber
+    }
   }
 
-  ngAfterViewInit() {
-    console.log("Capture created")
-    this.firebaseService.createCapture();
+  get isPhoneNumberVerified(): boolean {
+    return this.storageService.phoneVerified
   }
 
-  resend() {
-    this.isVerificationRequested = false
+  get phoneNumber() {
+    return this.storageService.phoneNumber
   }
 
-  get phoneNumber(): string {
-    return this.userProfile.mobileNumber
+
+  set newAddressLatitude(latitude: number) {
+    this._newAddressLatitude = latitude;
+    this.loadNearbyMessengers()
   }
 
-  set phoneNumber(phoneNumber: string) {
-    this.userProfile.mobileNumber =  phoneNumber
+  get newAddressLatitude() {
+    return this._newAddressLatitude;
+  } 
+
+  set newAddressLongitude(longitude: number) {
+    this._newAddressLongitude = longitude;
+    this.loadNearbyMessengers()
   }
+
+  get newAddressLongitude() {
+    return this._newAddressLongitude;
+  } 
 
   validData() {
-    return this.userProfile.address && this.userProfile.name && this.userProfile.surname
+    if (this.userProfile.name == null || this.userProfile.name.trim() == '') {
+      this.storageService.errorMessage = "Please provide your name"
+      return false
+    }
+    if (this.userProfile.address == null || this.userProfile.address.trim() == '') {
+      this.storageService.errorMessage = "Please provide your delivery address"
+      return false
+    }
+    if (this.userProfile.mobileNumber == null || this.userProfile.mobileNumber.trim() == '') {
+      this.storageService.errorMessage = "Please provide your mobile number"
+      return false
+    }
+    if (this.shippingBuildingType == null) {
+      this.storageService.errorMessage = "Please select your building type"
+      return false
+    }
+    if (this.shippingBuildingType != ShippingData.BuildingTypeEnum.HOUSE && 
+      (this.shippingBuildingUnitNumber == null || this.shippingBuildingUnitNumber.trim() == '')) {
+        this.storageService.errorMessage = "Please provide your unit number"
+        return false
+    }
+    if (this.shippingBuildingType != ShippingData.BuildingTypeEnum.HOUSE && 
+      (this.shippingBuildingName == null || this.shippingBuildingName.trim() == '')) {
+        this.storageService.errorMessage = "Please provide your building name"
+        return false
+    }
+    if (this.deliverySchedule == this.LATER && (this.selectedDate == null || this.selectedTime == null)) {
+      this.storageService.errorMessage = "Please provide your delivery date and time"
+      return false
+    }
+    return this.userProfile.address && this.userProfile.name
       && this.userProfile.mobileNumber 
       && (this.shippingBuildingType == ShippingData.BuildingTypeEnum.HOUSE || (this.shippingBuildingUnitNumber && this.shippingBuildingName))
-  }
-
-  verify() {
-    this.phoneNumber = this.phoneNumber.startsWith("+27")? this.phoneNumber : this.phoneNumber.startsWith("0") ? 
-      this.phoneNumber.replace("0", "+27") : this.phoneNumber.startsWith("27") ? "+" + this.phoneNumber : "+27" +this.phoneNumber;
-    this.firebaseService.requestVerification(this.phoneNumber)
-      .subscribe(() => {
-        this.isVerificationRequested = true
-        this.hasError = false;
-      }, (error) => {
-        this.hasError = true;
-        this.errorMessage = error.message;
-      })
-  }
-
-  confirmCode() {
-    this.firebaseService.confirmCode(this.code)
-      .subscribe(cred => {
-        this.isPhoneNumberVerified = true
-        this.findCustomer()
-        document.getElementsByName("scrollTo")[0].scrollIntoView();
-        window.scrollBy(0, -76)
-      }, (error) => {
-        console.log(error)
-      })
-  }
-
-  findCustomer() {
-    this.izingaOrderManager.getCustomerByPhoneNumber(this.userProfile.mobileNumber)
-    .pipe(
-      catchError(error => {
-        if(error.status === 404) {
-          console.log("Not found user")
-          return of(this.userProfile)
-        } else {
-          return throwError(error); 
-        }
-      }),
-    )
-    .subscribe(user => {
-      this.userProfile = user
-      this.storageService.userProfile = user;
-    })
   }
 
   createCustomer(): Observable<UserProfile> {
@@ -126,6 +147,13 @@ export class ShippingComponent implements OnInit {
       return
     }
 
+    if(this.messegers == null || this.messegers.length == 0) {
+      this.storageService.errorMessage = "Drivers are not available in your area at the moment."
+      return
+    }
+
+    this.pickUpDate = this.deliverySchedule == this.LATER ? this.updateDateTime() : null
+
     console.log(`enum is ${JSON.stringify(this.shippingBuildingType)}`)
     var customerObsv = this.userProfile.id != null ? of(this.userProfile) : this.createCustomer()
     customerObsv.pipe(
@@ -138,14 +166,18 @@ export class ShippingComponent implements OnInit {
           stage: Order.StageEnum._0CUSTOMERNOTPAID,
           description: `ord-${this.userProfile.mobileNumber}`,
           shippingData: {
-            fromAddress: `${this.storageService.shop?.name}`,
+            fromAddress: this.fromAddress ? this.fromAddress : `${this.storageService.shop?.name}`,
             toAddress: this.userProfile.address,
             messengerId: environment.messengerId,
+            fromBuildingType: this.fromBuildingType,
+            fromBuildingName: this.fromBuildingName,
+            fromUnitNumber: this.fromUnitNumber,
             buildingType: this.shippingBuildingType,
             unitNumber: this.shippingBuildingUnitNumber,
             buildingName: this.shippingBuildingName,
-            type: ShippingData.TypeEnum.DELIVERY,
-            additionalInstructions: this.additionalInstructions
+            type: this.deliverySchedule,
+            additionalInstructions: this.additionalInstructions,
+            pickUpTime: this.pickUpDate
           }
         }
         return this.izingaOrderManager.startOrder(this.order)
@@ -154,8 +186,49 @@ export class ShippingComponent implements OnInit {
       this.order = order
       this.order.description =  `ord-${this.order.id}`,
       this.storageService.order = order
-      this.router.navigate(['../payment'],{ relativeTo: this.route})
+      window.location.href = `${environment.izingaPayUrl}?Status=init&type=yoco&TransactionReference=${order.id}&callback=${environment.ozow_succeess_url}`
     })
   }
 
+  loadNearbyMessengers() {
+
+    if (this.storageService.shop?.storeMessenger && this.storageService.shop?.storeMessenger?.length > 0) {
+      console.log("looking up store messangers")
+      var lat = this.storageService.currentLocation.lat
+      var long = this.storageService.currentLocation.long
+      this.izingaOrderManager.findNearbyMessangers(lat, long, environment.range)
+      .subscribe(mess => {
+        this.messegers = mess
+      })
+      return
+    }
+
+    var latitude = this._newAddressLatitude != null && this._newAddressLatitude != 0 ? this._newAddressLatitude 
+      : this.userProfile.latitude != null && this.userProfile.latitude != 0 ? this.userProfile.latitude: this.storageService.currentLocation.lat;
+    
+    var longitude = this._newAddressLongitude != null && this._newAddressLongitude != 0 ? this._newAddressLongitude
+      : this.userProfile.longitude != null && this.userProfile.longitude != 0 ? this.userProfile.longitude: this.storageService.currentLocation.long;
+
+    console.log(`latitude/longitude is ${latitude}/${longitude}`)// 0.09999 is 15km range
+    console.log("looking nearby messangers")
+    this.izingaOrderManager.findNearbyMessangers(latitude, longitude, environment.range)
+    .subscribe(mess => {
+      this.messegers = mess
+    })
+  }
+
+  updateDateTime(): Date| null {
+    if (this.selectedDate && this.selectedTime) {
+      const dateTimeString = `${this.selectedDate}T${this.selectedTime}:00.000+00:00`; // ISO format string
+      const timestamp = Date.parse(dateTimeString);
+      return this.pickUpDate = new Date(timestamp);
+    }
+    return null
+  }
+
+  get deliversFromMultipleAddresses() {
+    return this.storageService.shop?.deliversFromMultipleAddresses || this.storageService.shop?.deliversFromMultipleAddresses == true
+  }
+
 }
+

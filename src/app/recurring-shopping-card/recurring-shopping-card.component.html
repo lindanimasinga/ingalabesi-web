@@ -1,0 +1,16 @@
+<div class="card my-1">
+    <div class="d-flex justify-content-between align-items-center">
+        <a routerLink="../recurring-form/{{list.id}}" class="text-decoration-none">
+            <div class="px-3 py-3">
+                <h5 class="fw-bold mb-2" style="font-family: Catamaran, Calibri, sans-serif;">🛒 {{list.name}}</h5>
+                <div class="mb-2 text-muted" style="font-size: 1rem;">{{list.schedule}}</div>
+                <div class="mb-1"><span class="text-secondary">Starting: </span> <span class="fw-bold">{{list.startDate | date: 'yyyy-MMM-dd'}}</span></div>
+                <div><span class="text-secondary">Ending: </span> <span class="fw-bold">{{list.endDate | date: 'yyyy-MMM-dd'}}</span></div>
+            </div>
+        </a>
+        <div class="d-flex flex-column align-items-end">
+            <button routerLink="../recurring-form/{{list.id}}" class="btn btn-sm bg-dark text-white actions">Edit</button>
+            <button (click)="deleteList(list.id)" class="btn btn-sm text-white actions" style="background-color: var(--btn-red-color);">Delete</button>
+        </div>
+    </div>
+</div>

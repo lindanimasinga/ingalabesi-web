@@ -9,3 +9,39 @@
         font-size: small;
     }
 }
+
+.logo {
+    background-image: var(--bkg-logo) !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 167px;
+    height: 73px;
+}
+
+.login {
+    height: 80px;  
+}
+
+.button-login {
+    background-color: #10a59f00;
+    font-size: 1.3rem;
+    color: var(--text-color) !important;
+}
+
+.nav-tab {
+    background: var(--nav-bg-color);
+}
+
+.material-icons {
+    font-size: 26px;
+    height: 26px;
+    color: #ffffff !important;
+}
+
+.mat-badge-content {
+    font-size: 18px !important;
+}
+
+.menu_label {
+    font-size: 12px;
+}

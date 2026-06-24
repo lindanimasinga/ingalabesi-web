@@ -17,13 +17,18 @@ export interface ShippingData {
     buildingType?: ShippingData.BuildingTypeEnum;
     fee?: number;
     fromAddress: string;
+    fromBuildingType?: ShippingData.BuildingTypeEnum
+    fromUnitNumber?: String
+    fromBuildingName?: String
     id?: string;
     messengerId?: string;
     pickUpTime?: Date;
     toAddress: string;
     type: ShippingData.TypeEnum;
     unitNumber?: string;
+    distance?: number;
 }
+
 export namespace ShippingData {
     export type BuildingTypeEnum = 'HOUSE' | 'OFFICE' | 'APARTMENT';
     export const BuildingTypeEnum = {
@@ -31,9 +36,10 @@ export namespace ShippingData {
         OFFICE: 'OFFICE' as BuildingTypeEnum,
         APARTMENT: 'APARTMENT' as BuildingTypeEnum
     };
-    export type TypeEnum = 'COLLECTION' | 'DELIVERY';
+    export type TypeEnum = 'COLLECTION' | 'DELIVERY' | 'SCHEDULED_DELIVERY';
     export const TypeEnum = {
         COLLECTION: 'COLLECTION' as TypeEnum,
-        DELIVERY: 'DELIVERY' as TypeEnum
+        DELIVERY: 'DELIVERY' as TypeEnum,
+        SCHEDULED_DELIVERY: 'SCHEDULED_DELIVERY' as TypeEnum
     };
 }

@@ -46,6 +46,10 @@ export class StoreProfile {
     tags?: Array<string>;
     verificationCode?: string;
     yearsInService?: number;
+    storeOffline?: boolean;
+    deliversFromMultipleAddresses?: boolean;
+    storeMessenger?: Array<StoreMessanger>
+    storeId?: string;
 }
 export namespace StoreProfile {
     export type RoleEnum = 'CUSTOMER' | 'STORE_ADMIN' | 'STORE' | 'MESSENGER';
@@ -62,4 +66,8 @@ export namespace StoreProfile {
         SALON: 'SALON' as StoreTypeEnum,
         CARWASH: 'CAR_WASH' as StoreTypeEnum
     };
+}
+
+export class StoreMessanger {
+    name?: string
 }

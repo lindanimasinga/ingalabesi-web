@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../service/storage-service.service';
 import { IzingaOrderManagementService } from '../service/izinga-order-management.service';
+import { SeoService } from '../service/seo.service';
 import { StoreProfile, Stock, Promotion } from '../model/models';
 import { environment } from 'src/environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from '../utils/utils';
-
-declare var Flickity: any;
-declare var ScrollMagic: any;
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -17,28 +16,52 @@ declare var ScrollMagic: any;
 export class HomeComponent implements OnInit {
 
   images: Array<String>
-  promotions: Promotion[] = [
-  ]
+  promotions: Promotion[] = []
+  categories: Set<String> = new Set<String>()
+  shop: StoreProfile;
+  startOrder = false;
+  searchItems: Stock[];
 
-  constructor(private storageService: StorageService,
-    private izingaService: IzingaOrderManagementService, private activatedRoute: ActivatedRoute) {
+  constructor(
+    protected izingaService: IzingaOrderManagementService, 
+    protected storage: StorageService, 
+    protected activatedRoute: ActivatedRoute, 
+    private router: Router, 
+    private sanitizer: DomSanitizer,
+    private seoService: SeoService
+  ) {
   }
 
   ngOnInit() {
-      console.log(`store id 2 is ${JSON.stringify(this.activatedRoute.paramMap)}`)
-        setTimeout(() => {
-          this.initScrollMagic()
-        }, 100);
+    // Set SEO for home page
+    this.seoService.setHomePageSEO();
+    
+    console.log(`store id 2 is ${JSON.stringify(this.activatedRoute.paramMap)}`)
+    var shortName =  this.activatedRoute.snapshot.paramMap.get('shortname')
+    console.log("shortname is " + shortName)
+    if (shortName != this.storage.basket?.storeId) {
+      this.storage.clearOrder()
+    }
+    this.izingaService.getStoreById(shortName)
+    .subscribe(shop => {
+      this.shop = shop;
+      this.storage.shop = shop;
       
-    this.izingaService.getAllPromotionsByStoreId(this.store.id)
-        .subscribe(promotions => {
-          this.promotions = promotions
-          setTimeout(() => {
-            this.initCarousel()
-            this.initScrollMagicForPromotions()
-          }, 100);
-          setTimeout(() => Utils.applyCustomeTheme(this.store.brandPrimaryColor), 100)
-        })
+      // Update SEO with store-specific information
+      this.seoService.updateMetaTags({
+        title: `${shop.name} - Food Delivery`,
+        description: `Order from ${shop.name} through iZinga Food Market. Fresh meals, fast delivery across South Africa. Browse menu and order online now.`,
+        keywords: `${shop.name}, food delivery, restaurant delivery, ${shop.name} menu, South Africa, order online, fast food`
+      });
+      
+      this.categories = new Set(this.shop.stockList.sort((a, b) => this.isPromotion(a) ? -1 : 1).map(stk => stk.group))
+      
+      //get promotions
+      this.izingaService.getAllPromotionsByStoreId(this.shop.id)
+          .subscribe(promotions => {
+            this.promotions = promotions
+          })
+    })
   }
 
   ngAfterViewInit() {
@@ -46,67 +69,45 @@ export class HomeComponent implements OnInit {
   }
 
   get store(): StoreProfile {
-    return this.storageService.shop
+    return this.shop
   }
 
-  get shopItems(): Stock[] {
-    return this.storageService.shop?.stockList
+  get cssImageUrl(): String {
+    var image = this.sanitizer.bypassSecurityTrustStyle(this.store.imageUrl)
+    return `url('${this.store.imageUrl}')`
   }
 
-  initCarousel() {
-    var elem = document.querySelector('.carousel');
-    new Flickity(elem, {
-      // options
-      "autoPlay": 5000,
-      "imagesLoaded": true,
-      "percentPosition": false
-    })
+  shopItems(category?: string): Stock[] {
+    return this.shop?.stockList.filter(item => item.group?.toLowerCase() == category?.toLowerCase())
   }
 
-  initScrollMagic() {
-    var controller = new ScrollMagic.Controller();
-    for (let number = 0; number < this.shopItems.length; number++) {
-      new ScrollMagic.Scene({
-        triggerElement: `#item${number}`,
-        reverse: true,
-        triggerHook: "0.9" // move trigger to center of element
-      })
-        .setClassToggle(`#item${number}`, "visible") // add class to reveal
-       // .addIndicators() // add indicators (requires plugin)
-        .addTo(controller);
-    }
+  shopItemsByName(name?: string) {
+    this.searchItems = name ? this.shop?.stockList.filter(item => item.name?.toLowerCase().includes(name?.toLowerCase())) : []
   }
 
-  initScrollMagicForPromotions() {
+  hasItemsInCart(): boolean {
+    return this.storage.basket != null && 
+      this.storage.basket.storeName == this.shop?.name &&
+      this.storage.basket.items.length > 0;
+  }
+
+  get cartNumberOfItems() { 
+    return this.storage.basket != null? this.storage.basket.items?.length : 0;
+  }
+
+  isPromotion(stock: Stock): boolean {
+    return this.isPromotionCategory(stock.group)
+  }
+
+  isPromotionCategory(category: string): boolean {
+    var promoTags = ["deal", "special", "promotion", "promotions", "deals", "specials", "family meals", "featured items"]
+    return promoTags.includes(category?.toLowerCase())
+  }
+
+  replaceSpecialChars(input?: string): string {
+    return input?.replace(/[^a-zA-Z0-9]/g, '_');
+  }
+
   
-    var controller = new ScrollMagic.Controller();
-    
-    new ScrollMagic.Scene({
-      triggerElement: `.carousel`,
-      reverse: true,
-      triggerHook: "0.9" // move trigger to center of element
-    })
-      .setClassToggle(`.carousel`, "visible") // add class to reveal
-     // .addIndicators() // add indicators (requires plugin)
-      .addTo(controller);
-
-    new ScrollMagic.Scene({
-      triggerElement: "#promotion1",
-      reverse: true,
-      triggerHook: "0.9" // move trigger to center of element
-    })
-      .setClassToggle(`#promotion1`, "visible") // add class to reveal
-   //   .addIndicators() // add indicators (requires plugin)
-      .addTo(controller);
-
-    new ScrollMagic.Scene({
-      triggerElement: "#promotion2",
-      reverse: true,
-      triggerHook: "0.9" // move trigger to center of element
-    })
-      .setClassToggle("#promotion2", "visible") // add class to reveal
-      //.addIndicators() // add indicators (requires plugin)
-      .addTo(controller);
-  }
 
 }

@@ -15,20 +15,157 @@
     src: url("/assets/fonts/Catamaran-Medium.ttf") format("opentype");
 }
 
-.page-header {
-    color: #494949 !important;
+/* Screen reader only content */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0.25rem 0.5rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+    background-color: var(--btn-bg-selected-color) !important;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 0.25rem !important;
+}
+
+/* SEO-friendly semantic sections */
+.hero-section {
+    position: relative;
+}
+
+.search-section {
+    position: relative;
+}
+
+.product-categories {
+    margin-top: 1rem;
+}
+
+.categories-nav {
+    width: 100%;
+}
+
+.category-header {
+    margin: 0;
+    font-weight: normal;
+}
+
+.category-header .btn {
+    border: none;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    background: none;
+    color: var(--text-color);
+}
+
+.category-header .btn:hover,
+.category-header .btn:focus {
+    background-color: var(--bkg-card-color);
+    color: var(--btn-bg-selected-color);
+    outline: 2px solid var(--btn-bg-selected-color);
+    outline-offset: 2px;
+}
+
+/* Enhanced focus indicators for accessibility */
+input:focus,
+button:focus,
+[tabindex]:focus {
+    outline: 2px solid var(--btn-bg-selected-color) !important;
+    outline-offset: 2px !important;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.material-icons {
+    font-size: 26px;
+    height: 26px;
+    color: #ffffff !important;
+}
+
+.mat-badge-content {
+    font-size: 18px !important;
+}
+
+.menu_label {
+    font-size: 12px;
+}
+
+.form-control, .form-control:disabled {
+    background-color: var(--bkg-card-color);
+    color: var(--text-color);
+}
+
+.bg-selected {
+    background-color: var(--btn-bg-selected-color) !important;
+    color: white !important;
+}
+
+.bg-not-selected {
+    background-color: white !important;
+    color: var(--btn-bg-selected-color) !important;
+}
+
+.card {
+    border: none !important;
+    background: var(--bkg-card-color);
+    outline: none;
+}
+
+.page-header, a {
+    color: var(--text-color);
+}
+
+.shop-item {
+    color: var(--text-color) !important;
+}
+
+.list-group-item {
+    background-color: var(--bkg-card-color);
+    color: var(--text-color);
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #f8f9fa;
 }
 
-#app-root {
-    min-height: calc(100vh - 227px);
+#main-content {
+    min-height: calc(91vh);
 }
 
 .bg-dark {
-    background-color: #494949 !important;
+    background-color: var(--btn-bg-color) !important;
+    color: white !important;
+}
+
+.button-dark {
+    background-color: var(--btn-bg-color) !important;
     color: white !important;
 }
 
@@ -41,25 +178,22 @@
 }
 
 .bg-light .nav-link {
-    color: #494949 !important;
+    color: var(--text-color) !important;
     font-size: larger;
 }
 
 .product {
-    color: #494949  ;
+    color: var(--text-color)  ;
 }
 
 mat-icon {
-    color: white !important;
+    color: var(--text-color) !important;
 }
 
 
 nav .logo {
     object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #494949;
-    height: 60px;
-    width: 60px;
+    height: 48px;
 }
 
 .payment-logo {
@@ -71,33 +205,29 @@ nav .logo {
 }
 
 .btn {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 300;
     border: none;
-    border-radius: 1rem;
-    height: 50px;
-}
-
-@media(max-width: 380px) {
-    .btn {
-        width: 100% !important;
-    }
+    border-radius: 0px;
+    padding: 15px;
+    width: 100% !important;
 }
 
 footer {
     padding-left: 16px;
     padding-right: 16px;
     background-repeat: no-repeat !important;
-    background: linear-gradient(0deg, #49494998 28%, #ffffff 93%);
+    background: var(--footer-bkg-color)
 }
 
 footer * {
-    color: white;
-    font-weight: 500;
+    color: var(--footer-text-color);
+    font-size: 14px;
 }
 
-footer h5 {
-    color: #494949 !important;
+.footer-header {
+    font-size: 16px !important;
+    color: var(--footer-text-color);
 }
 
 html, body {
@@ -124,13 +254,47 @@ a:active {
     color: red;
 }
 
+.info-message {
+    color: var(--btn-pill-color);
+    background: var(--bkg-card-color);
+}
+
 body {
     min-height: 100vh !important;
-    background-repeat: no-repeat !important;
-    background: linear-gradient(0deg, #ffffff 70%, #49494998 100%);
+    background: var(--bkg-color);
+    color: var(--text-color);
     margin: 0;
-    font-family: Catamaran
+    font-family: Catamaran;
+    --nav-bg-color: var(--bkg-card-color);
 }
+
+body {
+    --text-color: #212121;
+    --bkg-color: #F8F7F7;
+    --footer-bkg-color: #be833d;
+    --footer-text-color: white;
+    --bkg-card-color: #f3f2f2;
+    --btn-txt-color: #707070;
+    --btn-bg-color: #be833d;
+    --btn-bg-selected-color: #be833d;
+    --btn-pill-color: #1083A5;
+    --btn-red-color: #D66247;
+    --bkg-logo: url('/assets/images/izinga-logo.png')
+  }
+
+body.dark-theme {
+    --text-color: #F8F7F7;
+    --bkg-color: #212121;
+    --bkg-card-color: #2D2D2D;
+    --footer-bkg-color: #000000;
+    --footer-text-color: #eee;
+    --btn-txt-color: #2e2b2b;
+    --btn-bg-color: #be833d;
+    --btn-pill-color: #1083A5;
+    --bkg-logo: url('/assets/images/izinga-logo.png')
+  }
+
+
 
 /*animations*/
 .digit {

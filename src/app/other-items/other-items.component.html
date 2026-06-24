@@ -1,18 +1,34 @@
 <div class="mb-3 product h5">Other Items</div>
-<div class="row d-flex justify-content-sm-center justify-content-md-start">
-    <div class="col-6 col-md-3 col-lg-2 col-xl-2 d-flex justify-content-center" *ngFor="let item of shopItems; let number = index"  [shopItem]="item" [themeDark]="number%2 == 0">
-    <div [id]="'other-item'+number" class="d-flex justify-content-center digit">
-        <div class="shop-item-container mx-3 my-3 shadow-sm zoom">
-            <a [routerLink]="['../', item.id]">
-                <div class="shop-item gradient-color" [ngClass]="{'gradient-pink': !themeDark, 'gradient-blue': themeDark}">
-                    <img class="rounded" [src]="item.images[0]">
-                    <div class="d-flex justify-content-between details">
-                        <span class="itemName">{{item.name}} </span>
-                        <span>{{item.price | currency:'R'}}</span>
-                    </div>
-                </div>
-            </a>
+
+  <!-- Search bar -->
+  <div class="mb-3">
+    <input
+      type="search"
+      class="form-control"
+      placeholder="Search items by name..."
+      (input)="shopItemsByName($event.target.value)"
+      aria-label="Search items"
+    />
+  </div>
+
+  <div class="d-flex align-items-center row">
+      <div [id]="'item'+number" *ngFor="let item of searchItems; let number = index"  class="col-6 col-md-4 col-lg-3 col-xl-2">
+        <app-shop-item [shop]="store" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item>
+      </div>
+  </div>
+
+<div *ngFor="let cat of categories" class="categories">
+  <div class="accordion" id="accordionExample">
+            <div class="category my-1 p-2" type="button" data-toggle="collapse" [attr.data-target]="'#'+replaceSpecialChars(cat)" aria-expanded="true" aria-controls="collapseOne">
+              {{cat}}
+            </div>
+
+        <div [id]="replaceSpecialChars(cat)" class="collapse" [ngClass]="{'show': false}" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="d-flex align-items-center row">
+            <div [id]="'item'+number" *ngFor="let item of shopItems(cat); let number = index"  class="col-6 col-md-4 col-lg-3 col-xl-2">
+              <app-shop-item [shop]="store" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item>
+            </div>
+          </div>
         </div>
-    </div>
-    </div>
+  </div>
 </div>

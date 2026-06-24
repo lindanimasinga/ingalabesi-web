@@ -1,12 +1,40 @@
 
 .selected-image {
-    width: 281.6px;
-    height: 384px;
+    width: 320px;
+    height: 250px;
     object-fit: cover;
 }
 
 .thumbnail {
-    width: 42.18px;
-    height: 72px;
+    width: 42px;
+    height: 42px;
     object-fit: cover;
 }
+
+.btn-checkout {
+    color: #ffffff;
+    background-color: #d69447;
+    width: 100vw !important;
+    border-radius: 0%;
+  }
+
+  #addToListButton {
+    width: 110.4px !important;
+    height: 56.4px !important;
+    padding: 0px !important;
+    background-color: #D66247 !important;
+  }
+
+.material-icons {
+    font-size: 26px;
+    height: 26px;
+    color: #ffffff !important;
+}
+
+.mat-badge-content {
+    font-size: 18px !important;
+}
+
+.menu_label {
+    font-size: 12px;
+}  
