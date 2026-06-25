@@ -78,75 +78,75 @@ export class SeoService {
   // Page-specific SEO configurations
   setHomePageSEO() {
     this.titleService.setTitle('Ingalabesi The Chicken King | Order Flame Grilled Chicken Online');
-    this.metaService.updateTag({ name: 'description', content: 'Order flame grilled chicken online from Ingalabesi The Chicken King. Delivering to Umlazi, Nsimbini, Folweni and Mkhazini. Book a braai master for your next event in Durban.' });
-    this.metaService.updateTag({ name: 'keywords', content: 'Ingalabesi, flame grilled chicken, order chicken online, braai master Durban, event catering Durban, food delivery Umlazi, food delivery Nsimbini, food delivery Folweni, food delivery Mkhazini, chicken delivery Durban South' });
+    this.metaService.updateTag({ name: 'description', content: 'Order flame grilled chicken online from Ingalabesi The Chicken King. Collect from our store. Book a braai master for your next event in Durban.' });
+    this.metaService.updateTag({ name: 'keywords', content: 'Ingalabesi, flame grilled chicken, order online, collect online order, braai master Durban, event catering Durban, chicken Umlazi, order online Nsimbini, chicken Folweni, chicken Mkhazini, chicken Durban South' });
     this.metaService.updateTag({ property: 'og:title', content: 'Ingalabesi The Chicken King | Order Online' });
-    this.metaService.updateTag({ property: 'og:description', content: 'Order flame grilled chicken online. Delivering to Umlazi, Nsimbini, Folweni and Mkhazini. Book a braai master for events in Durban.' });
+    this.metaService.updateTag({ property: 'og:description', content: 'Order flame grilled chicken online and collect from our store. Book a braai master for your next event in Durban.' });
     this.metaService.updateTag({ property: 'og:url', content: 'https://www.ingalabesi.co.za' });
     this.metaService.updateTag({ property: 'og:type', content: 'website' });
   }
 
   setMenuSEO() {
     this.titleService.setTitle('Menu | Ingalabesi The Chicken King');
-    this.metaService.updateTag({ name: 'description', content: 'Browse our full menu of flame grilled chicken, wings, burgers and more. Order online for delivery to Umlazi, Nsimbini, Folweni and Mkhazini.' });
+    this.metaService.updateTag({ name: 'description', content: 'Browse our full menu of flame grilled chicken, wings, burgers and more. Order online and collect from our store.' });
   }
 
   setItemSEO(itemName: string, price: number) {
     this.titleService.setTitle(`${itemName} | Ingalabesi The Chicken King`);
-    this.metaService.updateTag({ name: 'description', content: `Order ${itemName} for R${price.toFixed(2)} from Ingalabesi The Chicken King. Fast delivery across Durban South.` });
+    this.metaService.updateTag({ name: 'description', content: `Order ${itemName} for R${price.toFixed(2)} from Ingalabesi The Chicken King. Order online and collect from our store.` });
   }
 
   setProductPageSEO(productName: string, productDescription: string, productImage?: string) {
     this.updateMetaTags({
       title: productName,
       description: productDescription,
-      image: productImage || 'https://izinga.co.za/assets/images/default-food.jpg',
-      keywords: `${productName}, food delivery, restaurant, South Africa, order online`,
+      image: productImage || 'https://www.ingalabesi.co.za/assets/images/ingalabesi-hero.jpg',
+      keywords: `${productName}, order online, collect online order, Ingalabesi, South Africa`,
       type: 'product'
     });
   }
 
   setCategoryPageSEO(categoryName: string) {
     this.updateMetaTags({
-      title: `${categoryName} Food Delivery`,
-      description: `Order ${categoryName.toLowerCase()} from top restaurants and vendors. Fast delivery across South Africa with iZinga Food Market.`,
-      keywords: `${categoryName}, food delivery, restaurants, online ordering, South Africa`,
+      title: `${categoryName} | Ingalabesi The Chicken King`,
+      description: `Order ${categoryName.toLowerCase()} from Ingalabesi The Chicken King. Order online and collect from our store in Durban South.`,
+      keywords: `${categoryName}, order online, collect online order, Ingalabesi, Durban South`,
       type: 'website'
     });
   }
 
   setCheckoutPageSEO() {
     this.updateMetaTags({
-      title: 'Secure Food Order Checkout',
-      description: 'Complete your food order with secure payment and fast delivery. Track your order in real-time.',
-      keywords: 'food checkout, secure payment, food delivery, order tracking, South Africa',
+      title: 'Checkout | Ingalabesi The Chicken King',
+      description: 'Complete your order from Ingalabesi The Chicken King with secure payment. Collect from our store.',
+      keywords: 'checkout, secure payment, order online, collect, Ingalabesi',
       type: 'website'
     });
   }
 
   setOrderPageSEO() {
     this.updateMetaTags({
-      title: 'My Food Orders',
-      description: 'Track your food orders and view order history. Manage your deliveries with iZinga Food Market.',
-      keywords: 'food orders, order tracking, delivery status, restaurant orders, South Africa',
+      title: 'My Orders | Ingalabesi The Chicken King',
+      description: 'Track your orders and view your order history at Ingalabesi The Chicken King.',
+      keywords: 'order tracking, order history, Ingalabesi, collect online order',
       type: 'website'
     });
   }
 
   setRestaurantPageSEO(restaurantName: string, cuisine?: string) {
     this.updateMetaTags({
-      title: `${restaurantName} - Food Delivery`,
-      description: `Order from ${restaurantName}${cuisine ? ` serving ${cuisine} cuisine` : ''} with fast delivery through iZinga Food Market.`,
-      keywords: `${restaurantName}, food delivery, ${cuisine || 'restaurant'}, online ordering, South Africa`,
+      title: `${restaurantName} | Ingalabesi The Chicken King`,
+      description: `Order ${cuisine ? `${cuisine} ` : ''}from ${restaurantName}. Order online and collect from our store.`,
+      keywords: `${restaurantName}, order online, ${cuisine || 'restaurant'}, collect, Durban South`,
       type: 'website'
     });
   }
 
   setMenuPageSEO(restaurantName: string, itemCount?: number) {
     this.updateMetaTags({
-      title: `${restaurantName} Menu - Order Online`,
-      description: `Browse ${restaurantName}'s menu${itemCount ? ` with ${itemCount}+ items` : ''} and order for delivery or pickup through iZinga Food Market.`,
-      keywords: `${restaurantName} menu, food delivery, restaurant menu, order online, South Africa`,
+      title: `${restaurantName} Menu | Order Online`,
+      description: `Browse ${restaurantName}'s menu${itemCount ? ` with ${itemCount}+ items` : ''}. Order online and collect from our store.`,
+      keywords: `${restaurantName} menu, order online, collect online order, Ingalabesi`,
       type: 'website'
     });
   }
