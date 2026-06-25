@@ -21,6 +21,7 @@ export class ShopItemDescrComponent implements OnInit {
   optionSelected: string;
   quantity: number = 1;
   imageSelected: string;
+  itemAdded = false;
   store: StoreProfile;
   shoppingList: ShoppingList = {
     items: []
@@ -56,13 +57,15 @@ export class ShopItemDescrComponent implements OnInit {
 
     this.basketItem = {
       name: this.shopItem.name,
-      price: this.shopItem.price * this.quantity,
+      price: this.shopItem.price,
       discountPerc: this.shopItem.discountPerc,
       options: this.shopItem.mandatorySelection,
       quantity: this.quantity,
       image: this.shopItem.images ? this.shopItem.images[0] : undefined
     }
     this.storageService.addToCart(this.basketItem);
+    this.itemAdded = true;
+    setTimeout(() => this.itemAdded = false, 2000);
   }
 
   addToShoppingList() {

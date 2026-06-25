@@ -1,13 +1,10 @@
-<div class="d-flex justify-content-center">
-    <div class="card shop-item-container my-3 shadow-sm">
-        <a [routerLink]="['/' + shop.id + '/item', shopItem.id]">
-            <div class="shop-item" [ngClass]="{'gradient-pink': !themeDark, 'gradient-blue': themeDark}">
-                <img class="rounded px-2 py-1" [src]="stockImage">
-                <div class="d-flex justify-content-between details mx-2">
-                    <span class="d-flex align-items-end item-name">{{shopItem.name}} </span>
-                    <span class="d-flex align-items-end price">{{shopItem.price | currency:'R'}}</span>
-                </div>
-            </div>
-        </a>
-    </div>
+<div class="item-card" [routerLink]="['/home/item', shopItem?.id]">
+  <div class="item-card__image-wrap">
+    <img class="item-card__image" [src]="shopItem?.images?.[0]" [alt]="shopItem?.name" onerror="this.src='/assets/images/ingalabesi-logo.png'">
+  </div>
+  <div class="item-card__body">
+    <p class="item-card__name">{{shopItem?.name}}</p>
+    <p class="item-card__price">R{{shopItem?.price | number:'1.2-2'}}</p>
+  </div>
+  <button class="item-card__add" type="button" [attr.aria-label]="'Add ' + shopItem?.name + ' to cart'" (click)="$event.stopPropagation()">+</button>
 </div>

@@ -1,0 +1,79 @@
+.login-page {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 28px 24px 96px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.logo-img { width: 80px; height: auto; }
+.logo-wordmark {
+  font-family: 'Catamaran', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 2px; color: #1A1A1A;
+  margin-top: 6px; text-transform: uppercase;
+}
+.logo-subtitle { font-size: 10px; color: #1A1A1A; letter-spacing: 0.5px; }
+
+.screen-heading { font-size: 24px; font-weight: 700; color: #1A1A1A; margin: 0 0 8px; }
+.screen-body { font-size: 14px; color: #6B6B6B; line-height: 1.5; margin: 0 0 24px; }
+
+.field-label { display: block; font-size: 14px; font-weight: 600; color: #1A1A1A; margin-bottom: 6px; }
+
+.phone-row {
+  display: flex;
+  height: 48px;
+  border: 1.5px solid #D9D0B8;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.phone-row:focus-within {
+  border-color: #E67B26;
+  box-shadow: 0 0 0 3px rgba(230, 123, 38, 0.12);
+}
+
+.phone-prefix {
+  width: 56px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: #F8F8F8;
+  border-right: 1.5px solid #D9D0B8;
+  font-size: 16px; font-weight: 600; color: #1A1A1A;
+}
+.phone-row:focus-within .phone-prefix { border-right-color: #E67B26; }
+
+.phone-field {
+  flex: 1; border: none; outline: none;
+  padding: 0 12px; font-size: 16px; color: #1A1A1A;
+  background: #FFFFFF;
+}
+.phone-field::placeholder { color: #9E9E9E; }
+
+.recaptcha-wrapper { margin-top: 16px; }
+
+.resend-row {
+  font-size: 13px; color: #6B6B6B;
+  margin-top: 12px; cursor: pointer;
+}
+.resend-link { color: #E67B26; font-weight: 600; text-decoration: none; }
+
+.btn-primary {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 56px; width: 100%;
+  background: #E67B26; color: #FFFFFF;
+  border: none; border-radius: 50px;
+  font-size: 18px; font-weight: 600; letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(230, 123, 38, 0.35);
+  cursor: pointer; margin-top: 16px;
+  transition: filter 0.15s;
+}
+.btn-primary:hover:not(:disabled) { filter: brightness(0.9); }
+.btn-primary:disabled { opacity: 0.50; cursor: not-allowed; box-shadow: none; }

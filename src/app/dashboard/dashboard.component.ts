@@ -16,7 +16,7 @@ export class DashboardComponent {
     var userProfile = this.storageService.userProfile
     console.log(`user is ${userProfile}`)
     if(userProfile == null) {
-      this.router.navigate(['login'])
+      this.router.navigate(['/login'])
       return
     }
   }
@@ -27,7 +27,7 @@ export class DashboardComponent {
 
   logout() {
     this.storageService.logout()
-    this.router.navigate(['login'])
+    this.router.navigate(['/login'])
   }
 
 }

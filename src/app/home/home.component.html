@@ -1,79 +1,55 @@
-<section class="hero-section">
-  <div class="">
-    <div class="mb-1 mt-1 py-3">
-      <div>
-        <h1 class="h5 page-header">{{shop?.name}} Menu</h1>
-        <p class="sr-only">Browse our premium collection of fashion, beauty, and lifestyle products</p>
-      </div>
-    </div>
+<section class="menu-header home-shell">
+  <h1 class="menu-title">{{shop?.name}} Menu</h1>
+  <input
+    #searchInput
+    id="product-search"
+    type="search"
+    class="menu-search-input"
+    placeholder="Search meals, wings, burgers, and more"
+    (input)="shopItemsByName(searchInput.value)"
+    aria-label="Search items by name"
+  />
+</section>
 
-    <!-- Search bar -->
-    <div class="search-section mb-3">
-      <label for="product-search" class="sr-only">Search products</label>
-      <input
-        id="product-search"
-        type="search"
-        class="form-control"
-        placeholder="Search items by name..."
-        (input)="shopItemsByName($event.target.value)"
-        aria-label="Search items by name"
-        aria-describedby="search-help"
-      />
-      <div id="search-help" class="sr-only">Type to search through available products</div>
-    </div>
-
-    <div class="d-flex align-items-center row" role="grid" aria-label="Product search results" *ngIf="searchItems?.length > 0">
-        <div [id]="'item'+number" *ngFor="let item of searchItems; let number = index"  
-             class="col-6 col-md-4 col-lg-3 col-xl-2"
-             role="gridcell"
-             [attr.aria-label]="'Product ' + (number + 1) + ' of ' + searchItems.length">
-          <app-shop-item [shop]="shop" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item>
-        </div>
+<section class="home-shell" *ngIf="searchItems?.length > 0">
+  <div class="menu-grid">
+    <div *ngFor="let item of searchItems" class="menu-grid-item">
+      <app-shop-item [shop]="shop" [shopItem]="item"></app-shop-item>
     </div>
   </div>
 </section>
 
-<section class="product-categories" aria-label="Product categories">
-  <h2 class="sr-only">Shop by Category</h2>
-  <nav class="categories-nav" role="navigation" aria-label="Product categories">
-    <div *ngFor="let cat of categories; let catIndex = index" class="categories">
-      <div class="accordion" [id]="'accordion-' + catIndex" role="tablist">
-        <h3 class="category-header">
-          <button 
-            class="category my-1 p-2 btn btn-link w-100 text-left" 
-            type="button" 
-            data-toggle="collapse" 
-            [attr.data-target]="'#'+replaceSpecialChars(cat)" 
-            [attr.aria-expanded]="!cat || isPromotionCategory(cat) ? 'true' : 'false'"
-            [attr.aria-controls]="replaceSpecialChars(cat)"
-            [attr.id]="'heading-' + replaceSpecialChars(cat)"
-            role="tab">
-            {{cat}}
-            <span class="sr-only">(Click to expand category)</span>
-          </button>
-        </h3>
+<div class="search-empty-state home-shell" role="status" *ngIf="showNoSearchResults">
+  <p class="search-empty-state__title">No items found for "{{searchTerm}}"</p>
+  <p class="search-empty-state__text">Try a shorter search term or browse categories below.</p>
+</div>
 
-        <div 
-          [id]="replaceSpecialChars(cat)" 
-          class="collapse" 
-          [ngClass]="{'show': !cat || isPromotionCategory(cat)}" 
-          [attr.aria-labelledby]="'heading-' + replaceSpecialChars(cat)"
-          [attr.data-parent]="'#accordion-' + catIndex"
-          role="tabpanel">
-          <div class="d-flex align-items-center row" role="grid" [attr.aria-label]="cat + ' products'">
-            <div 
-              [id]="'item'+number" 
-              *ngFor="let item of shopItems(cat); let number = index" 
-              [ngClass]="{'col-12 col-md-6 col-lg-4 col-xl-3': isPromotion(item), 'col-6 col-md-4 col-lg-3 col-xl-2': !isPromotion(item)}" 
-              class=""
-              role="gridcell"
-              [attr.aria-label]="'Product ' + (number + 1) + ' in ' + cat + ' category'">
-              <app-shop-item-large *ngIf="isPromotion(item)" [shop]="shop" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item-large>
-              <app-shop-item *ngIf="!isPromotion(item)" [shop]="shop" [shopItem]="item" [themeDark]="number%2 == 0"></app-shop-item>
-            </div>
-          </div>
+<section class="product-categories home-shell" aria-label="Menu categories" *ngIf="hasStockItems">
+  <div *ngFor="let cat of categories; let catIndex = index" class="home-category-card mb-2">
+    <button
+      type="button"
+      class="home-category-btn"
+      [class.expanded]="isCategoryExpanded(cat)"
+      (click)="toggleCategory(cat)"
+      [attr.aria-expanded]="isCategoryExpanded(cat)">
+      {{cat}}
+      <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="category-items" *ngIf="isCategoryExpanded(cat)">
+      <div class="menu-grid">
+        <div *ngFor="let item of shopItems(cat)" class="menu-grid-item">
+          <app-shop-item [shop]="shop" [shopItem]="item"></app-shop-item>
         </div>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
+
+<section class="home-shell" *ngIf="showNoStockItems">
+  <div class="stock-empty-state" aria-live="polite">
+    <h2 class="stock-empty-state__title">Menu items are coming soon</h2>
+    <p class="stock-empty-state__text">We are updating this menu. Please check back shortly or contact us directly.</p>
+  </div>
 </section>

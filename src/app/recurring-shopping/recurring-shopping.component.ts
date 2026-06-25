@@ -23,7 +23,7 @@ export class RecurringShoppingComponent {
     this.userProfile = this.storageService.userProfile
     console.log(`user is ${this.userProfile}`)
     if(this.userProfile == null) {
-      this.router.navigate(['login'])
+      this.router.navigate(['/login'])
       return
     }
 
