@@ -23,6 +23,7 @@ jobs:
 
       - name: Write environment files
         run: |
+          mkdir -p src/environments
           cat > src/environments/environment.ts << 'EOF'
           import { StoreProfile } from '../app/model/models';
           export var environment = {
