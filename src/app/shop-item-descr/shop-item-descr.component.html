@@ -20,9 +20,9 @@
 
     <div class="col-md-6">
 
-        <div class="product row">
-            <div class="col-6 product h5 ">Price</div>
-            <div class="col-6 product h5 price">{{shopItem?.price * quantity | currency:'R'}}</div>
+        <div class="item-price-stack">
+          <span class="item-price-label">Price</span>
+          <span class="item-price-value">R{{shopItem?.price | number:'1.2-2'}}</span>
         </div>
 
         <div class="mb-3">{{shopItem?.description}}</div>
@@ -40,27 +40,20 @@
             </div>
         </div>
     
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <button type="button" class="btn btn-sm btn-light" (click)="decreaseQuantity()">-</button>
-            <div class="col-6 mt-3">
-                <input type="number" [(ngModel)]="quantity" class="form-control" min="1" max="100" required>
-                <div class="invalid-feedback">
-                    Please select a valid quantity.
-                </div>
-            </div>
-            <button type="button" class="btn btn-sm btn-light" (click)="increaseQuantity()">+</button>
+        <div class="qty-stepper mt-3">
+          <button type="button" class="qty-btn" (click)="decreaseQuantity()" aria-label="Decrease quantity">−</button>
+          <span class="qty-value">{{quantity}}</span>
+          <button type="button" class="qty-btn qty-btn--plus" (click)="increaseQuantity()" aria-label="Increase quantity">+</button>
         </div>
-        <div class="d-flex justify-content-between mt-3 mb-3">
-            <button class="btn btn-lg btn-block bg-dark  shadow-sm mr-1" (click)="addToCart()" [disabled]="!hasValidSeletion()">
-                Add to Cart
-            </button>
-            <button type="button" class="btn bg-dark" (click)="addToShoppingList()" id="addToListButton">
-                <div class="d-flex flex-column align-items-center text-white">
-                    <mat-icon class="example-tab-icon">favorite</mat-icon>
-                    <div class="menu_label">Favorites</div>
-                </div>
-            </button>
+        <div class="item-actions mt-3">
+          <button class="btn-add-to-cart" type="button" (click)="addToCart()" [disabled]="!hasValidSeletion()">
+            Add to Cart
+          </button>
+          <button type="button" class="fav-btn-inline" (click)="addToShoppingList()" aria-label="Add to favourites">
+            ♡ Save
+          </button>
         </div>
+        <div class="add-to-cart-toast" *ngIf="itemAdded" role="status" aria-live="polite">✓ Added to cart</div>
 
     </div>
 </div>
@@ -70,8 +63,5 @@
     <div>{{shopItem.detailedDescription}}</div>
 </div>
 
-<div class="mt-5">
-    <app-other-items></app-other-items>
-</div>
 
   </div>

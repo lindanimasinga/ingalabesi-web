@@ -28,7 +28,7 @@ export class PrintableMenuComponent extends HomeComponent {
     this.izingaService.getStoreById(shortName)
     .subscribe(shop => {
       this.shop = shop;
-      this.categories = new Set(this.shop.stockList.map(stk => stk.group))
+      this.categories = [...new Set(this.shop.stockList.map(stk => stk.group).filter(g => !!g))]
       //get promotions
       this.izingaService.getAllPromotionsByStoreId(this.shop.id)
           .subscribe(promotions => {

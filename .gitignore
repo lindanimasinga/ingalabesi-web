@@ -50,3 +50,7 @@ Thumbs.db
 
 # angular
 .angular
+
+# environment files — never commit; injected via GitHub Secrets in CI
+src/environments/environment.ts
+src/environments/environment.prod.ts

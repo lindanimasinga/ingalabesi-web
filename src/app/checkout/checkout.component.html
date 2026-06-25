@@ -9,27 +9,30 @@
     <div class="h5">Items: {{basket.items.length}}</div>
 </div>
 
-<div class="mt-5 row">
-    <div *ngFor="let item of basket.items" class="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center">
-        <div class="basket-item m-1">
-            <img [src]="item.image" class="">
-            <div class="info mt-3 p-2">
-                <div class="description">{{item.name}}</div>
-                <div>{{item.price | currency:'R'}}</div>
-                <div>Quantity: {{item.quantity}}</div>
-                <div *ngFor="let option of item.options" >{{option.name}}: {{option.selected}}</div>
-                <a class="" (click)="remove(item)"><div class="badge badge-danger">Remove</div></a>
-            </div>
+<div class="mt-4 row">
+    <div class="col-12" *ngFor="let item of basket.items">
+      <div class="basket-item-card">
+        <img class="basket-item-image" [src]="item.image" [alt]="item.name" onerror="this.style.display='none'">
+        <div class="basket-item-details">
+          <div class="basket-item-name">{{item.name}}</div>
+          <div class="basket-item-price">R{{item.price * item.quantity | number:'1.2-2'}}</div>
+          <div class="basket-item-qty">Qty: {{item.quantity}}</div>
+          <div *ngFor="let option of item.options" class="basket-item-qty">{{option.name}}: {{option.selected}}</div>
+          <button class="basket-item-remove" type="button" (click)="remove(item)">Remove</button>
         </div>
+      </div>
     </div>
 </div>
+
     <a *ngIf="loggedId()" routerLink="../shipping">
-        <button class="btn btn-lg btn-block btn-primary bg-dark mt-5 shadow-sm align-middle">
+        <button class="btn-continue">
         Continue ({{totalPrice() | currency:'R'}})
+        <span class="material-icons" aria-hidden="true">arrow_forward</span>
     </button></a>
 
-    <a *ngIf="!loggedId()" routerLink="../login">
-        <button class="btn btn-lg btn-block btn-primary bg-dark mt-5 shadow-sm align-middle">
+    <a *ngIf="!loggedId()" routerLink="/login">
+        <button class="btn-continue">
         Continue ({{totalPrice() | currency:'R'}})
+        <span class="material-icons" aria-hidden="true">arrow_forward</span>
     </button></a>
 </div>
