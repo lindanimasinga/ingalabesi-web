@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SeoService } from '../service/seo.service';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css']
 })
-export class LandingComponent {
-  constructor(private router: Router) {}
+export class LandingComponent implements OnInit {
+  constructor(private router: Router, private seoService: SeoService) {}
+
+  ngOnInit(): void {
+    this.seoService.setHomePageSEO();
+  }
 
   orderNow(): void {
     this.router.navigate(['/home']);

@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { StorageService } from '../service/storage-service.service';
 import { BasketItem, StoreProfile } from '../model/models';
 import { ShoppingList } from '../model/shopping-list';
+import { SeoService } from '../service/seo.service';
 
 @Component({
   selector: 'app-shop-item-descr',
@@ -29,7 +30,8 @@ export class ShopItemDescrComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private izingaService: IzingaOrderManagementService,
-    private storageService: StorageService) { }
+    private storageService: StorageService,
+    private seoService: SeoService) { }
 
   ngOnInit() {
     this.route.params.subscribe(param => {
@@ -39,6 +41,7 @@ export class ShopItemDescrComponent implements OnInit {
         this.shopItem = this.store.stockList.find(item => item.id == stockId)
         this.imageSelected = this.shopItem.images ? this.shopItem.images[0] : undefined
         this.quantity = 1;
+        this.seoService.setItemSEO(this.shopItem.name, this.shopItem.price);
 
         if (!this.storageService.shoppingList) {
           this.storageService.shoppingList = this.shoppingList;

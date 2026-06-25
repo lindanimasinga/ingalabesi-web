@@ -77,13 +77,23 @@ export class SeoService {
 
   // Page-specific SEO configurations
   setHomePageSEO() {
-    this.updateMetaTags({
-      title: 'Food Delivery & Restaurant Marketplace',
-      description: 'Order food from your favorite restaurants and local vendors. iZinga Food Market delivers fresh meals, groceries, and specialty foods across South Africa.',
-      keywords: 'food delivery, restaurant delivery, online ordering, South Africa, groceries, local vendors, fast food, meals',
-      url: 'https://izinga.co.za',
-      type: 'website'
-    });
+    this.titleService.setTitle('Ingalabesi The Chicken King | Order Flame Grilled Chicken Online');
+    this.metaService.updateTag({ name: 'description', content: 'Order flame grilled chicken online from Ingalabesi The Chicken King. Delivering to Umlazi, Nsimbini, Folweni and Mkhazini. Book a braai master for your next event in Durban.' });
+    this.metaService.updateTag({ name: 'keywords', content: 'Ingalabesi, flame grilled chicken, order chicken online, braai master Durban, event catering Durban, food delivery Umlazi, food delivery Nsimbini, food delivery Folweni, food delivery Mkhazini, chicken delivery Durban South' });
+    this.metaService.updateTag({ property: 'og:title', content: 'Ingalabesi The Chicken King | Order Online' });
+    this.metaService.updateTag({ property: 'og:description', content: 'Order flame grilled chicken online. Delivering to Umlazi, Nsimbini, Folweni and Mkhazini. Book a braai master for events in Durban.' });
+    this.metaService.updateTag({ property: 'og:url', content: 'https://www.ingalabesi.co.za' });
+    this.metaService.updateTag({ property: 'og:type', content: 'website' });
+  }
+
+  setMenuSEO() {
+    this.titleService.setTitle('Menu | Ingalabesi The Chicken King');
+    this.metaService.updateTag({ name: 'description', content: 'Browse our full menu of flame grilled chicken, wings, burgers and more. Order online for delivery to Umlazi, Nsimbini, Folweni and Mkhazini.' });
+  }
+
+  setItemSEO(itemName: string, price: number) {
+    this.titleService.setTitle(`${itemName} | Ingalabesi The Chicken King`);
+    this.metaService.updateTag({ name: 'description', content: `Order ${itemName} for R${price.toFixed(2)} from Ingalabesi The Chicken King. Fast delivery across Durban South.` });
   }
 
   setProductPageSEO(productName: string, productDescription: string, productImage?: string) {
